@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回覆已收到 — Yapo &amp; Katy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stub-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .ticket {
+            width: min(420px, 100%);
+            background: var(--white);
+            border: 1px solid var(--line-strong);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            position: relative;
+        }
+
+        .ticket-body { padding: 56px 40px 34px; }
+
+        .ticket-eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 18px;
+        }
+
+        .ticket h1 {
+            font-style: italic;
+            font-size: 40px;
+            margin-bottom: 18px;
+        }
+
+        .ticket p.msg { font-size: 14.5px; color: var(--ink-faint); margin-bottom: 8px; }
+
+        .perforation {
+            position: relative;
+            height: 0;
+            border-top: 1px dashed var(--line-strong);
+            margin: 8px 0;
+        }
+
+        .perforation::before, .perforation::after {
+            content: '';
+            position: absolute;
+            top: -11px;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+        }
+
+        .perforation::before { left: -11px; }
+        .perforation::after { right: -11px; }
+
+        .ticket-stub {
+            padding: 26px 40px 34px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ticket-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 22px;
+            padding: 12px 26px;
+            border: 1px solid var(--ink);
+            text-decoration: none;
+            color: var(--ink);
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .ticket-back-link:hover { background: var(--ink); color: var(--paper); }
+    </style>
+</head>
+<body>
+    <div class="stub-screen">
+        <div class="ticket">
+            <div class="ticket-body">
+                <p class="ticket-eyebrow">Reply Received</p>
+                <h1>Thank You</h1>
+                <p class="msg">您的回覆已成功送達。</p>
+                <p class="msg">期待在 2027 年 1 月 17 日與您相見。</p>
+                <a href="/" class="ticket-back-link">返回首頁 →</a>
+            </div>
+            <div class="perforation"></div>
+            <div class="ticket-stub">
+                <span>Y &amp; K</span>
+                <span>2027.01.17</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sound-toggle" id="soundToggle" role="button" tabindex="0" aria-label="播放或暫停背景音樂">
+        <span class="sound-bars"><span></span><span></span><span></span></span>
+        <span class="sound-toggle-label" id="soundLabel">Sound Off</span>
+    </div>
+
+    <audio id="bgAudio" src="assets/ambience.mp3" loop playsinline preload="none"></audio>
+
+    <script>
+        const bgAudio = document.getElementById('bgAudio');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundLabel = document.getElementById('soundLabel');
+
+        const setState = (isPlaying) => {
+            soundToggle.classList.toggle('is-playing', isPlaying);
+            soundLabel.textContent = isPlaying ? 'Sound On' : 'Sound Off';
+        };
+
+        soundToggle.addEventListener('click', () => {
+            if (bgAudio.paused) {
+                bgAudio.volume = 0.7;
+                bgAudio.play().then(() => setState(true)).catch(() => setState(false));
+            } else {
+                bgAudio.pause();
+                setState(false);
+            }
+        });
+        soundToggle.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                soundToggle.click();
+            }
+        });
+    </script>
+</body>
+</html>

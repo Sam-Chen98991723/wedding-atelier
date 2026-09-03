@@ -1,0 +1,392 @@
+/* Admin console — reuses tokens & form styling from style.css */
+
+body.console-body {
+    background: var(--paper);
+    min-height: 100vh;
+}
+
+.console-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.console-sidebar {
+    width: 248px;
+    flex-shrink: 0;
+    background: var(--ink);
+    color: rgba(247, 241, 230, 0.86);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 32px 26px;
+}
+
+.console-brand {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 21px;
+    color: var(--paper);
+    margin-bottom: 6px;
+}
+
+.console-brand-sub {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 46px;
+}
+
+.console-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.console-nav button {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    padding: 12px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.72;
+    transition: background 0.25s ease, opacity 0.25s ease;
+}
+
+.console-nav button .idx {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.console-nav button:hover { background: rgba(247, 241, 230, 0.08); opacity: 1; }
+.console-nav button.is-active { background: rgba(247, 241, 230, 0.12); opacity: 1; }
+.console-nav button[hidden] { display: none; }
+
+.console-sidebar-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(247, 241, 230, 0.16);
+}
+
+.console-user {
+    font-size: 12px;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+}
+
+.console-logout {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(247, 241, 230, 0.85);
+    text-decoration: none;
+    border: 1px solid rgba(247, 241, 230, 0.3);
+    padding: 10px 14px;
+    text-align: center;
+    transition: background 0.25s ease;
+}
+.console-logout:hover { background: rgba(247, 241, 230, 0.1); }
+
+/* ---------- Main ---------- */
+.console-main {
+    flex: 1;
+    min-width: 0;
+    padding: 44px 48px 80px;
+}
+
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 34px;
+}
+
+.console-header h1 {
+    font-style: italic;
+    font-size: 32px;
+}
+
+.console-header p {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+}
+
+.console-section { display: none; }
+.console-section.is-active { display: block; }
+
+/* ---------- Stat row ---------- */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    margin-bottom: 40px;
+}
+
+.stat-tile {
+    background: var(--white);
+    padding: 20px 24px;
+}
+
+.stat-tile .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+}
+
+.stat-tile .stat-value {
+    font-family: var(--serif);
+    font-size: 30px;
+    color: var(--ink);
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.toolbar-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+.btn-solid { background: var(--ink); color: var(--paper); }
+.btn-solid:hover { background: var(--ink-soft); }
+
+.btn-quiet {
+    border-color: var(--line-strong);
+    color: var(--ink-faint);
+    font-size: 11px;
+    padding: 8px 14px;
+}
+.btn-quiet:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.btn-danger { border-color: var(--clay); color: var(--clay-deep); }
+.btn-danger:hover { background: var(--clay); color: var(--white); border-color: var(--clay); }
+
+/* ---------- Table ---------- */
+.table-shell {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--line-strong);
+    background: var(--white);
+}
+
+table.console-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 920px;
+    font-size: 13.5px;
+}
+
+.console-table th {
+    text-align: left;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line-strong);
+    white-space: nowrap;
+}
+
+.console-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+
+.console-table tbody tr:hover { background: var(--paper); }
+
+.console-table td.truncate {
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pill {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--line-strong);
+}
+.pill-yes { color: #3c5a3c; border-color: #b7cdb7; }
+.pill-no { color: var(--clay-deep); border-color: #e0bfae; }
+
+.row-actions { display: flex; gap: 8px; }
+.row-actions button {
+    background: none;
+    border: none;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    cursor: pointer;
+    padding: 2px 0;
+    border-bottom: 1px solid transparent;
+}
+.row-actions button:hover { color: var(--ink); border-color: var(--ink); }
+.row-actions button.danger:hover { color: var(--clay-deep); border-color: var(--clay-deep); }
+
+/* ---------- Accounts ---------- */
+.account-list { display: flex; flex-direction: column; gap: 1px; background: var(--line-strong); border: 1px solid var(--line-strong); }
+.account-row { background: var(--white); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.account-name { font-size: 15px; color: var(--ink); }
+.account-role { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin-top: 4px; }
+.account-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.account-controls select {
+    border: 1px solid var(--line-strong);
+    background: var(--white);
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 12.5px;
+}
+
+/* ---------- Panels (settings / create user / add guest inline) ---------- */
+.panel {
+    background: var(--white);
+    border: 1px solid var(--line-strong);
+    padding: 28px 30px;
+    margin-bottom: 30px;
+}
+
+.panel h2 {
+    font-style: italic;
+    font-size: 19px;
+    margin-bottom: 22px;
+}
+
+.panel-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 720px) {
+    .panel-grid.cols-3 { grid-template-columns: repeat(3, 1fr); align-items: end; }
+    .panel-grid.cols-2 { grid-template-columns: repeat(2, 1fr); align-items: end; }
+}
+
+.panel-msg { font-size: 13px; margin-top: 14px; min-height: 18px; }
+.panel-msg.ok { color: #3c5a3c; }
+.panel-msg.err { color: var(--clay-deep); }
+
+/* ---------- Drawer ---------- */
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 26, 20, 0.4);
+    z-index: 400;
+    display: none;
+}
+.drawer-overlay.is-open { display: block; }
+
+.drawer {
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    width: min(460px, 100%);
+    background: var(--paper);
+    border-left: 1px solid var(--line-strong);
+    z-index: 410;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    overflow-y: auto;
+    padding: 40px 34px 60px;
+}
+.drawer.is-open { transform: translateX(0); }
+
+.drawer-close {
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 32px; height: 32px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--ink);
+}
+
+.drawer h2 { font-style: italic; font-size: 22px; margin-bottom: 30px; }
+
+.drawer .field { margin-bottom: 22px; }
+.drawer-actions { display: flex; gap: 10px; margin-top: 6px; }
+
+/* ---------- Sound toggle re-anchor for console layout ---------- */
+.console-shell ~ .sound-toggle { bottom: 22px; right: 22px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .console-shell { flex-direction: column; }
+    .console-sidebar {
+        position: static;
+        height: auto;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        padding: 18px 20px;
+        gap: 18px;
+    }
+    .console-brand-sub { display: none; }
+    .console-brand { margin-bottom: 0; }
+    .console-sidebar { flex-wrap: wrap; justify-content: space-between; }
+    .console-sidebar > div:first-child { order: 1; }
+    .console-sidebar-foot { order: 2; flex-direction: row; align-items: center; border-top: none; padding-top: 0; }
+    .console-nav { order: 3; flex: 1 1 100%; flex-direction: row; overflow-x: auto; }
+    .console-nav button { white-space: nowrap; }
+    .console-user { display: none; }
+    .console-main { padding: 30px 20px 70px; }
+}

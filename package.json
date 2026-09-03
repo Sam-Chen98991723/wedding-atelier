@@ -1,0 +1,21 @@
+{
+  "name": "wedding-atelier",
+  "version": "1.0.0",
+  "description": "Yapo & Katy 婚禮邀請網站與後台管理系統",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test --test-concurrency=1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "exceljs": "^4.4.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.4.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "sqlite3": "^6.0.1"
+  }
+}

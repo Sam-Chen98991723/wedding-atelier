@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理 — Wedding Atelier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="console-body">
+    <div class="console-shell">
+        <aside class="console-sidebar">
+            <div>
+                <div class="console-brand">Wedding Atelier</div>
+                <div class="console-brand-sub">Admin Console</div>
+            </div>
+
+            <ul class="console-nav">
+                <li><button type="button" class="is-active" data-section="guests"><span class="idx">01</span> 賓客名單</button></li>
+                <li><button type="button" hidden data-section="accounts" id="navAccounts"><span class="idx">02</span> 系統帳號</button></li>
+                <li><button type="button" data-section="settings"><span class="idx">03</span> 個人設定</button></li>
+            </ul>
+
+            <div class="console-sidebar-foot">
+                <span class="console-user" id="sessionUser">—</span>
+                <a href="/api/logout" class="console-logout">Logout</a>
+            </div>
+        </aside>
+
+        <main class="console-main">
+            <div class="console-header">
+                <div>
+                    <h1 id="pageTitle">賓客名單</h1>
+                    <p id="pageSubtitle">所有回覆會即時顯示在下方，資料庫欄位皆已加密儲存。</p>
+                </div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-tile">
+                    <div class="stat-label">Site Visits</div>
+                    <div class="stat-value" id="statViews">—</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Total Replies</div>
+                    <div class="stat-value" id="statTotal">—</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Attending</div>
+                    <div class="stat-value" id="statAttending">—</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Guest Count</div>
+                    <div class="stat-value" id="statGuests">—</div>
+                </div>
+            </div>
+
+            <!-- ===== 賓客名單 ===== -->
+            <section class="console-section is-active" id="section-guests">
+                <div class="toolbar">
+                    <span class="toolbar-title">Guest List</span>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <a href="/api/admin/export-excel" class="btn btn-quiet">匯出 Excel</a>
+                        <button type="button" class="btn btn-solid admin-only" id="btnAddGuest" hidden>＋ 新增賓客</button>
+                    </div>
+                </div>
+
+                <div class="table-shell">
+                    <table class="console-table" id="guestTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>姓名</th>
+                                <th>電話</th>
+                                <th>出席</th>
+                                <th>人數</th>
+                                <th>兒童座椅</th>
+                                <th>葷食</th>
+                                <th>素食</th>
+                                <th>Email</th>
+                                <th>地址</th>
+                                <th>祝福留言</th>
+                                <th>飯店需求</th>
+                                <th class="admin-only" hidden>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guestTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== 系統帳號 ===== -->
+            <section class="console-section" id="section-accounts">
+                <div class="panel">
+                    <h2>新增系統帳號</h2>
+                    <div class="panel-grid cols-3">
+                        <div class="field" style="margin:0;">
+                            <label>帳號</label>
+                            <input type="text" id="newUsername">
+                        </div>
+                        <div class="field" style="margin:0;">
+                            <label>密碼</label>
+                            <input type="password" id="newUserPassword">
+                        </div>
+                        <div class="field" style="margin:0;">
+                            <label>權限</label>
+                            <select id="newUserRole">
+                                <option value="staff">一般人員</option>
+                                <option value="admin">超級管理員</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-solid" id="btnCreateUser" style="margin-top:20px;">建立帳號</button>
+                    <p class="panel-msg" id="createUserMsg"></p>
+                </div>
+
+                <div class="toolbar"><span class="toolbar-title">System Accounts</span></div>
+                <div class="account-list" id="accountList"></div>
+            </section>
+
+            <!-- ===== 個人設定 ===== -->
+            <section class="console-section" id="section-settings">
+                <div class="panel">
+                    <h2>修改個人密碼</h2>
+                    <div class="panel-grid cols-2">
+                        <div class="field" style="margin:0;">
+                            <label>舊密碼</label>
+                            <input type="password" id="oldPassword">
+                        </div>
+                        <div class="field" style="margin:0;">
+                            <label>新密碼（至少 6 位）</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-solid" id="btnChangePassword" style="margin-top:20px;">更新密碼</button>
+                    <p class="panel-msg" id="changePasswordMsg"></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ===== 新增／編輯賓客 抽屜 ===== -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer" id="guestDrawer" aria-hidden="true">
+        <button type="button" class="drawer-close" id="drawerClose">×</button>
+        <h2 id="drawerTitle">新增賓客資料</h2>
+        <input type="hidden" id="drawerId">
+
+        <div class="field">
+            <label>姓名</label>
+            <input type="text" id="drawerName">
+        </div>
+        <div class="field">
+            <label>聯絡電話</label>
+            <input type="tel" id="drawerPhone" maxlength="10" inputmode="numeric" placeholder="0912345678">
+        </div>
+        <div class="field">
+            <label>出席</label>
+            <select id="drawerAttendance">
+                <option value="Y">出席</option>
+                <option value="N">不出席</option>
+            </select>
+        </div>
+
+        <div id="drawerAttendanceDetails">
+            <div class="field">
+                <label>人數</label>
+                <input type="number" id="drawerNumbers" min="0" value="1">
+            </div>
+            <div class="field" id="drawerChildSeatField" style="display:none;">
+                <label>兒童座椅需求</label>
+                <select id="drawerChildSeats"></select>
+            </div>
+            <div class="field">
+                <label>葷食需求</label>
+                <select id="drawerMeatCount"></select>
+            </div>
+            <div class="field">
+                <label>素食需求</label>
+                <select id="drawerVegetarianCount"></select>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="email" id="drawerEmail">
+            </div>
+            <div class="field">
+                <label>喜帖寄送地址</label>
+                <textarea id="drawerInviteAddress" rows="3"></textarea>
+            </div>
+            <div class="field">
+                <label>飯店訂房需求</label>
+                <select id="drawerHotelNeeds">
+                    <option value="不需要">不需要</option>
+                    <option value="需要協助訂房">有訂房需求</option>
+                </select>
+            </div>
+            <div class="field" id="drawerHotelDetailField" style="display:none;">
+                <label>訂房需求說明</label>
+                <textarea id="drawerHotelDetail" rows="2"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>祝福留言</label>
+            <textarea id="drawerBlessing" rows="3"></textarea>
+        </div>
+
+        <div class="drawer-actions">
+            <button type="button" class="btn btn-solid" id="drawerSave">儲存</button>
+            <button type="button" class="btn btn-quiet" id="drawerCancel">取消</button>
+        </div>
+        <p class="panel-msg" id="drawerMsg"></p>
+    </aside>
+
+    <div class="sound-toggle" id="soundToggle" role="button" tabindex="0" aria-label="播放或暫停背景音樂">
+        <span class="sound-bars"><span></span><span></span><span></span></span>
+        <span class="sound-toggle-label" id="soundLabel">Sound Off</span>
+    </div>
+
+    <audio id="bgAudio" src="assets/ambience.mp3" autoplay loop muted playsinline preload="auto"></audio>
+
+    <script src="audio-consent.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

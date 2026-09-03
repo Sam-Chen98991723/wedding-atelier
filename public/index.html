@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapo & Katy — 2027.01.17</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="progress-rail" id="progressRail"></div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-mark">Y · K</div>
+        <ul class="nav-chapters">
+            <li><a href="#home"><span class="chapter-index">00</span> Home</a></li>
+            <li><a href="#story"><span class="chapter-index">01</span> Story</a></li>
+            <li><a href="#details"><span class="chapter-index">02</span> Details</a></li>
+            <li><a href="#rsvp"><span class="chapter-index">03</span> RSVP</a></li>
+        </ul>
+    </nav>
+
+    <header id="home" class="hero">
+        <p class="hero-eyebrow reveal">Save the Date</p>
+        <h1 class="hero-names reveal">Yapo &amp; Katy</h1>
+        <p class="hero-date reveal">2027 · 01 · 17 — 桃園 · 川門子</p>
+        <div class="hero-rule reveal"></div>
+
+        <div class="ledger reveal" id="weddingCountdown" aria-label="婚禮倒數計時">
+            <div class="ledger-cell">
+                <span class="ledger-value" id="cd-days">00</span>
+                <span class="ledger-label">Days</span>
+            </div>
+            <div class="ledger-cell">
+                <span class="ledger-value" id="cd-hours">00</span>
+                <span class="ledger-label">Hours</span>
+            </div>
+            <div class="ledger-cell">
+                <span class="ledger-value" id="cd-minutes">00</span>
+                <span class="ledger-label">Minutes</span>
+            </div>
+            <div class="ledger-cell">
+                <span class="ledger-value" id="cd-seconds">00</span>
+                <span class="ledger-label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="hero-scroll-cue">
+            <span>Scroll</span>
+            <span class="cue-line"></span>
+        </div>
+    </header>
+
+    <section id="story" class="chapter">
+        <div class="chapter-inner">
+            <div class="chapter-heading reveal">
+                <span class="chapter-index">01</span>
+                <span class="chapter-rule"></span>
+                <h2>Our Story</h2>
+            </div>
+
+            <div class="story-grid">
+                <div class="story-text reveal">
+                    <p class="lede">成長於不同的城市，因緣際會走到同一段路上。從第一次見面時的笨拙寒暄，到後來無話不談的日常，我們決定把接下來的每一天，都寫成同一本故事。</p>
+                    <p>謝謝在人生不同階段認識我們、陪我們走到這裡的你。這一次，換我們主動發出邀請——</p>
+                    <p class="story-signoff">請與我們一起，為這個新的篇章舉杯。</p>
+                </div>
+                <div class="monogram reveal">Y · K</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="divider-scene">
+        <div class="divider-frame reveal">
+            <p>Forever, from this day forward</p>
+            <span>Yapo &amp; Katy · 2027</span>
+        </div>
+    </section>
+
+    <section id="details" class="chapter">
+        <div class="chapter-inner">
+            <div class="chapter-heading reveal">
+                <span class="chapter-index">02</span>
+                <span class="chapter-rule"></span>
+                <h2>The Details</h2>
+            </div>
+
+            <dl class="itinerary reveal">
+                <div class="itinerary-item">
+                    <dt>Ceremony Date</dt>
+                    <dd>2027 年 01 月 17 日 （日）</dd>
+                </div>
+                <div class="itinerary-item">
+                    <dt>Reception</dt>
+                    <dd>12:30 開席</dd>
+                </div>
+                <div class="itinerary-item">
+                    <dt>Venue</dt>
+                    <dd>桃園 川門子</dd>
+                </div>
+                <div class="itinerary-item">
+                    <dt>Address</dt>
+                    <dd>桃園市蘆竹區蘆興里南竹路二段156-2號</dd>
+                </div>
+            </dl>
+
+            <p class="gallery-note reveal">Getting Here &amp; Parking</p>
+            <div class="gallery reveal">
+                <figure>
+                    <img src="assets/parking.jpg" alt="交通指引">
+                    <figcaption></figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/traffic.jpg" alt="停車資訊">
+                    <figcaption></figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section id="rsvp" class="chapter">
+        <div class="chapter-inner">
+            <div class="chapter-heading reveal">
+                <span class="chapter-index">03</span>
+                <span class="chapter-rule"></span>
+                <h2>RSVP</h2>
+            </div>
+
+            <div class="reply-card reveal">
+                <p class="rsvp-intro">請於 2026 年 10 月 15 日前告知我們您的出席安排，謝謝！</p>
+
+                <form action="/submit-rsvp" method="POST" id="rsvpForm">
+                    <div class="field">
+                        <label>姓名 *</label>
+                        <input type="text" name="name" placeholder="您的姓名" required>
+                    </div>
+
+                    <div class="field">
+                        <label>聯絡電話 *</label>
+                        <input type="tel" name="phone" placeholder="0912345678" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="請輸入10碼數字電話號碼" required>
+                    </div>
+
+                    <div class="field">
+                        <label>是否出席</label>
+                        <select name="attendance" id="attendance" required>
+                            <option value="Y">是，我會出席</option>
+                            <option value="N">否，不克前往</option>
+                        </select>
+                    </div>
+
+                    <div id="attendanceDetails">
+                        <div class="field">
+                            <label>參加人數</label>
+                            <div class="stepper">
+                                <button type="button" class="stepper-btn" id="countDecrease" aria-label="減少參加人數">−</button>
+                                <span class="stepper-value" id="countDisplay">1</span>
+                                <button type="button" class="stepper-btn" id="countIncrease" aria-label="增加參加人數">＋</button>
+                                <input type="hidden" name="numbers" id="numbers" value="1">
+                            </div>
+                        </div>
+
+                        <div class="field" id="childSeatField" style="display:none;">
+                            <label>兒童座椅需求</label>
+                            <select name="childSeats" id="childSeats"></select>
+                        </div>
+
+                        <div class="field">
+                            <label>葷食需求</label>
+                            <select name="meatCount" id="meatCount"></select>
+                        </div>
+
+                        <div class="field">
+                            <label>素食需求</label>
+                            <select name="vegetarianCount" id="vegetarianCount"></select>
+                        </div>
+
+                        <div class="field">
+                            <label>是否需要喜帖</label>
+                            <select name="invitationDelivery" id="invitationDelivery">
+                                <option value="email">需要，請寄電子喜帖給我</option>
+                                <option value="paper">需要，請寄紙本喜帖給我</option>
+                                <option value="none">不需要，我已經記起來婚禮資訊了</option>
+                            </select>
+                        </div>
+
+                        <div class="field" id="invitationEmailField">
+                            <label>電子郵件（我們會寄送電子喜帖給您）</label>
+                            <input type="email" name="email" id="invitationEmail" placeholder="example@email.com">
+                        </div>
+
+                        <div class="field" id="invitationAddressField" style="display:none;">
+                            <label>地址（我們會寄紙本喜帖給您）</label>
+                            <textarea name="inviteAddress" id="invitationAddress" rows="3" placeholder="請填寫希望收到紙本喜帖的地址"></textarea>
+                        </div>
+
+                        <p class="field-hint" id="mealHint"></p>
+                    </div>
+
+                    <div class="field">
+                        <label>祝福留言</label>
+                        <textarea name="blessing" rows="3" placeholder="寫下您對我們的祝福"></textarea>
+                    </div>
+
+                    <p class="rsvp-note">若需變更出席人數或餐點，請直接與我們聯絡。<br>如有飯店訂房需求，也歡迎聯絡我們代為協助。</p>
+
+                    <button type="submit" class="btn-submit">送出回覆 <span class="arrow">→</span></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-mark">Y &amp; K</div>
+        <p>2027 · 01 · 17</p>
+    </footer>
+
+    <div class="sound-toggle" id="soundToggle" role="button" tabindex="0" aria-label="播放或暫停背景音樂">
+        <span class="sound-bars"><span></span><span></span><span></span></span>
+        <span class="sound-toggle-label" id="soundLabel">Sound Off</span>
+    </div>
+
+    <audio id="bgAudio" src="assets/ambience.mp3" autoplay loop muted playsinline preload="auto"></audio>
+
+    <script src="audio-consent.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
